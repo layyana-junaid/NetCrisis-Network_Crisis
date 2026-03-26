@@ -12,7 +12,7 @@ A real-time, AI-powered network crisis simulation platform featuring a cinematic
 
 ---
 
-![banner](screenshots/netcrisis.2jpg.jpg)
+![banner](screenshots/netcrisis2.jpg)
 
 ---
 
