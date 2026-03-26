@@ -12,6 +12,14 @@ A real-time, AI-powered network crisis simulation platform featuring a cinematic
 
 ---
 
+![banner](screenshots/netcrisis2jpg.jpg)
+
+---
+
+![banner](screenshots/netcrisis.jpg)
+
+---
+
 ## Overview
 
 NETCRISIS simulates a realistic enterprise network under cyber attack. Four AI agents powered by Groq's LLaMA 3.3 70B autonomously attack, defend, monitor, and generate traffic across a 16-node network topology. The frontend renders everything in real-time through WebSocket streaming.
