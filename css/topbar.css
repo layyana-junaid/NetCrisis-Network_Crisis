@@ -1,0 +1,125 @@
+/* ============================================
+   NETCRISIS — Top Bar
+   ============================================ */
+
+#topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--topbar-height);
+  padding: 0 20px;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  z-index: 100;
+}
+
+/* Logo Section */
+.topbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.topbar-logo__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  flex-shrink: 0;
+}
+
+.topbar-logo__dot--active {
+  animation: dotPulse 1.5s ease-in-out infinite;
+  background: var(--attack-red);
+  box-shadow: 0 0 8px var(--attack-red);
+}
+
+.topbar-logo__text {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.6rem;
+  color: var(--accent-primary);
+  letter-spacing: 3px;
+  line-height: 1;
+}
+
+/* Health Score Section */
+.topbar-health {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.topbar-health__score {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 3rem;
+  line-height: 1;
+  transition: color var(--transition-health);
+}
+
+.topbar-health__score--healthy {
+  color: var(--defense-green);
+}
+
+.topbar-health__score--warning {
+  color: var(--warning-amber);
+}
+
+.topbar-health__score--critical {
+  color: var(--attack-red);
+  text-shadow: 0 0 20px rgba(255, 59, 59, 0.5);
+}
+
+.topbar-health__label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Status Section */
+.topbar-status {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.topbar-status__tick {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
+}
+
+.topbar-status__badge {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 2px;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  text-transform: uppercase;
+}
+
+.topbar-status__badge--running {
+  background: rgba(0, 255, 136, 0.12);
+  color: var(--defense-green);
+  border: 1px solid rgba(0, 255, 136, 0.3);
+}
+
+.topbar-status__badge--paused {
+  background: rgba(255, 184, 0, 0.12);
+  color: var(--warning-amber);
+  border: 1px solid rgba(255, 184, 0, 0.3);
+}
+
+.topbar-status__badge--crisis {
+  background: rgba(255, 59, 59, 0.12);
+  color: var(--attack-red);
+  border: 1px solid rgba(255, 59, 59, 0.3);
+  animation: statusPulse 2s ease-in-out infinite;
+}

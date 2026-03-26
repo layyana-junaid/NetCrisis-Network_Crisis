@@ -1,0 +1,199 @@
+/* ============================================
+   NETCRISIS — Health Dashboard
+   ============================================ */
+
+#health-dashboard {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border);
+  overflow-y: auto;
+  min-height: 0;
+}
+
+/* Attack Banner */
+.attack-banner {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(255, 59, 59, 0.1);
+  border: 1px solid rgba(255, 59, 59, 0.3);
+  border-radius: var(--radius-md);
+  margin-bottom: 12px;
+  animation: fadeInUp 300ms ease;
+}
+
+.attack-banner--active {
+  display: flex;
+}
+
+.attack-banner__icon {
+  color: var(--attack-red);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.attack-banner__text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--attack-red);
+  letter-spacing: 0.5px;
+}
+
+/* Donut Chart */
+.donut-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.donut-svg {
+  width: 140px;
+  height: 140px;
+}
+
+.donut-bg {
+  fill: none;
+  stroke: var(--bg-base);
+  stroke-width: 12;
+}
+
+.donut-fill {
+  fill: none;
+  stroke-width: 12;
+  stroke-linecap: round;
+  transition: stroke-dashoffset var(--transition-health),
+              stroke var(--transition-health);
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+.donut-center-text {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 32px;
+  fill: var(--text-primary);
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.donut-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+
+/* Node Status Cards */
+.node-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.node-card {
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 8px 10px;
+  transition: border-color var(--transition-normal),
+              background var(--transition-normal);
+}
+
+.node-card:hover {
+  border-color: var(--accent-primary);
+  background: var(--bg-elevated);
+}
+
+.node-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.node-card__name {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--text-primary);
+  letter-spacing: 0.5px;
+}
+
+.node-card__ip {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-muted);
+}
+
+.node-card__health-bar {
+  width: 100%;
+  height: 4px;
+  background: var(--bg-surface);
+  border-radius: 2px;
+  margin: 4px 0;
+  overflow: hidden;
+}
+
+.node-card__health-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 500ms ease, background 500ms ease;
+}
+
+.node-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.node-card__type {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.status-badge {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 9px;
+  letter-spacing: 1px;
+  padding: 2px 6px;
+  border-radius: var(--radius-pill);
+  text-transform: uppercase;
+}
+
+.status-badge--normal {
+  background: rgba(0, 212, 255, 0.1);
+  color: var(--accent-cyan);
+}
+
+.status-badge--under_attack {
+  background: rgba(255, 59, 59, 0.15);
+  color: var(--attack-red);
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+.status-badge--compromised {
+  background: rgba(255, 59, 59, 0.2);
+  color: var(--attack-red);
+}
+
+.status-badge--isolated {
+  background: rgba(77, 77, 77, 0.3);
+  color: #777;
+}
+
+.status-badge--recovering {
+  background: rgba(255, 184, 0, 0.15);
+  color: var(--warning-amber);
+}

@@ -1,0 +1,168 @@
+/* ============================================
+   NETCRISIS — Base Styles & Animations
+   ============================================ */
+
+/* Reset */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-body);
+  background: var(--bg-base);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* App Layout */
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+#main-content {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+#left-panel {
+  width: var(--left-panel-width);
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+#right-panel {
+  width: var(--right-panel-width);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--border);
+  overflow: hidden;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-primary);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-glow);
+}
+
+/* Selection */
+::selection {
+  background: var(--accent-primary);
+  color: var(--text-primary);
+}
+
+/* ============================================
+   Keyframe Animations
+   ============================================ */
+
+@keyframes attackPulse {
+  0%, 100% { filter: drop-shadow(0 0 4px var(--attack-red)); }
+  50% { filter: drop-shadow(0 0 16px rgba(255, 59, 59, 0.53)); }
+}
+
+@keyframes recoverPulse {
+  0%, 100% { filter: drop-shadow(0 0 4px var(--warning-amber)); }
+  50% { filter: drop-shadow(0 0 12px rgba(255, 184, 0, 0.4)); }
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes statusPulse {
+  0%, 100% { box-shadow: 0 0 4px var(--attack-red); }
+  50% { box-shadow: 0 0 12px var(--attack-red), 0 0 24px rgba(255, 59, 59, 0.3); }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes packetPulse {
+  0%, 100% { r: 5; opacity: 0.8; }
+  50% { r: 7; opacity: 1; }
+}
+
+@keyframes linkFlash {
+  0% { stroke: var(--accent-cyan); stroke-opacity: 1; }
+  100% { stroke-opacity: 0; }
+}
+
+@keyframes crisisFlash {
+  0%, 100% { background: var(--bg-surface); }
+  50% { background: rgba(255, 59, 59, 0.08); }
+}
+
+/* Utility Classes */
+.hidden { display: none !important; }
+.mono { font-family: var(--font-mono); }
+.heading-font { font-family: var(--font-heading); }
+
+/* Button Reset */
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-family: var(--font-heading);
+  transition: transform var(--transition-fast), 
+              box-shadow var(--transition-normal),
+              opacity var(--transition-normal);
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+button:disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}

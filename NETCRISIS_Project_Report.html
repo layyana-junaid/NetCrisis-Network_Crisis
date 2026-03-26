@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NETCRISIS — Project Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  @page { margin: 20mm 18mm; size: A4; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Inter',sans-serif; color:#1a1a2e; line-height:1.7; background:#fff; padding:40px 60px; max-width:900px; margin:0 auto; }
+  @media print { body { padding:0; } }
+
+  /* Cover */
+  .cover { text-align:center; padding:80px 0 60px; border-bottom:3px solid #C0392B; margin-bottom:40px; page-break-after:always; }
+  .cover h1 { font-size:42px; font-weight:700; color:#1A0A0F; letter-spacing:3px; margin-bottom:8px; }
+  .cover .subtitle { font-size:18px; color:#555; margin-bottom:40px; }
+  .cover .meta { font-size:14px; color:#777; line-height:2; }
+  .cover .badge { display:inline-block; background:#C0392B; color:#fff; padding:4px 16px; border-radius:20px; font-size:13px; font-weight:600; margin-top:24px; }
+
+  /* Headings */
+  h2 { font-size:24px; font-weight:700; color:#1A0A0F; margin:36px 0 16px; padding-bottom:8px; border-bottom:2px solid #C0392B; }
+  h3 { font-size:18px; font-weight:600; color:#2D1219; margin:24px 0 10px; }
+  h4 { font-size:15px; font-weight:600; color:#444; margin:16px 0 8px; }
+
+  /* Body */
+  p { margin-bottom:14px; font-size:14.5px; }
+  ul, ol { margin:0 0 16px 24px; font-size:14.5px; }
+  li { margin-bottom:6px; }
+  strong { color:#1A0A0F; }
+
+  /* Code */
+  code { font-family:'JetBrains Mono',monospace; background:#f4f0f1; padding:2px 6px; border-radius:4px; font-size:13px; color:#C0392B; }
+  pre { background:#1A0A0F; color:#e0d0d4; padding:20px 24px; border-radius:8px; overflow-x:auto; font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.6; margin:12px 0 20px; }
+
+  /* Tables */
+  table { width:100%; border-collapse:collapse; margin:12px 0 24px; font-size:13.5px; }
+  th { background:#2D1219; color:#fff; text-align:left; padding:10px 14px; font-weight:600; }
+  td { padding:9px 14px; border-bottom:1px solid #e8e0e2; }
+  tr:nth-child(even) td { background:#faf6f7; }
+
+  /* Diagram box */
+  .diagram { background:#f9f5f6; border:1px solid #e0d0d4; border-radius:8px; padding:20px; margin:16px 0 24px; }
+  .diagram pre { background:#1A0A0F; margin:0; }
+
+  /* Callout */
+  .callout { background:#fff5f5; border-left:4px solid #C0392B; padding:14px 18px; margin:16px 0; border-radius:0 8px 8px 0; font-size:14px; }
+  .callout.green { background:#f0fff5; border-left-color:#00CC66; }
+  .callout.amber { background:#fffcf0; border-left-color:#E6A800; }
+
+  /* page break helper */
+  .page-break { page-break-before: always; }
+
+  /* Figure */
+  .figure { text-align:center; margin:20px 0; }
+  .figure-caption { font-size:12px; color:#888; margin-top:6px; font-style:italic; }
+
+  /* Footer */
+  .footer { margin-top:60px; padding-top:20px; border-top:1px solid #ddd; text-align:center; font-size:12px; color:#999; }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER PAGE ============ -->
+<div class="cover">
+  <h1>NETCRISIS</h1>
+  <div class="subtitle">AI-Powered Network Crisis Simulation Dashboard</div>
+  <div class="meta">
+    <strong>Course:</strong> Computer Networks<br/>
+    <strong>Date:</strong> March 2026<br/>
+    <strong>Technology Stack:</strong> Python, FastAPI, LangChain, LangGraph, D3.js<br/>
+  </div>
+  <div class="badge">Project Report</div>
+</div>
+
+<!-- ============ TABLE OF CONTENTS ============ -->
+<h2>Table of Contents</h2>
+<ol>
+  <li><a href="#intro">Introduction</a></li>
+  <li><a href="#objectives">Project Objectives</a></li>
+  <li><a href="#architecture">System Architecture</a></li>
+  <li><a href="#network">Network Topology & Protocols</a></li>
+  <li><a href="#simulation">Simulation Engine</a></li>
+  <li><a href="#agents">AI Agent System</a></li>
+  <li><a href="#langgraph">LangGraph Orchestration</a></li>
+  <li><a href="#frontend">Frontend Dashboard</a></li>
+  <li><a href="#api">API & Communication</a></li>
+  <li><a href="#attacks">Attack & Defense Mechanisms</a></li>
+  <li><a href="#tech">Technology Stack</a></li>
+  <li><a href="#setup">Setup & Execution</a></li>
+  <li><a href="#conclusion">Conclusion</a></li>
+</ol>
+
+<!-- ============ 1. INTRODUCTION ============ -->
+<h2 id="intro">1. Introduction</h2>
+<p>
+  <strong>NETCRISIS</strong> is a real-time network crisis simulation platform that combines classical computer networking concepts with modern AI agents. It models a 16-node enterprise network topology using NetworkX and visualizes it through a cinematic dark-themed D3.js dashboard. Four autonomous AI agents — powered by Groq's LLaMA 3.3 70B large language model — continuously attack, defend, monitor, and generate traffic across the network.
+</p>
+<p>
+  The system demonstrates several core computer networking concepts in action: <strong>OSPF routing with Dijkstra's algorithm</strong>, <strong>BGP route tables</strong>, <strong>access control lists (ACLs)</strong>, <strong>link utilization and congestion</strong>, <strong>DDoS flood attacks</strong>, <strong>BGP hijacking</strong>, <strong>man-in-the-middle interception</strong>, and <strong>port scanning</strong>. All of these run on a real Python backend with a NetworkX graph, not simulated in the browser.
+</p>
+
+<!-- ============ 2. OBJECTIVES ============ -->
+<h2 id="objectives">2. Project Objectives</h2>
+<ul>
+  <li>Model a realistic enterprise network topology with routers, switches, servers, and hosts</li>
+  <li>Implement OSPF shortest-path routing using Dijkstra's algorithm via NetworkX</li>
+  <li>Maintain BGP routing information bases for all core and edge routers</li>
+  <li>Implement an ACL (Access Control List) engine for per-node traffic filtering</li>
+  <li>Simulate four types of cyber attacks with progressive, realistic impact</li>
+  <li>Build four autonomous AI agents that make strategic decisions about the network</li>
+  <li>Orchestrate agents using LangGraph's StateGraph with controlled firing frequency</li>
+  <li>Stream real-time state updates via WebSocket to a cinematic web dashboard</li>
+  <li>Provide manual control through REST API endpoints for human intervention</li>
+</ul>
+
+<!-- ============ 3. ARCHITECTURE ============ -->
+<h2 id="architecture" class="page-break">3. System Architecture</h2>
+<p>The system follows a <strong>client-server architecture</strong> with clear separation of concerns:</p>
+
+<div class="diagram">
+<pre>
+┌─────────────────────────────────────────────────────┐
+│              FRONTEND (Browser - Vanilla JS)         │
+│                                                      │
+│   D3.js Topology ◄──┐                               │
+│   Health Dashboard ◄─┤── EventBus ◄── WebSocket     │
+│   Log Panel ◄────────┤               Client          │
+│   Control Panel ─────┴──► REST API Calls             │
+└──────────────────────────┬──────────────────────────┘
+                           │ ws://localhost:8000/ws
+                           │ http://localhost:8000/control/*
+┌──────────────────────────▼──────────────────────────┐
+│              BACKEND (Python FastAPI)                 │
+│                                                      │
+│   main.py ─── Tick Loop (async) ─── WebSocket Push   │
+│       │                                              │
+│       ├── simulation.py ── NetworkX Graph Engine      │
+│       │     ├── OSPF Routing (Dijkstra)              │
+│       │     ├── BGP Route Tables                     │
+│       │     ├── ACL Engine                           │
+│       │     └── Attack Processing                    │
+│       │                                              │
+│       ├── graph.py ── LangGraph StateGraph            │
+│       │     └── Sequential: ATK → DEF → MON → TFC   │
+│       │                                              │
+│       └── agents.py ── 4 LangChain Chains            │
+│             ├── REDSTORM (Attacker)                   │
+│             ├── GUARDIAN (Defender)                    │
+│             ├── OVERWATCH (Monitor)                   │
+│             └── FLOWMASTER (Traffic)                  │
+└──────────────────────────────────────────────────────┘
+</pre>
+</div>
+
+<h3>Data Flow</h3>
+<ol>
+  <li>The <strong>simulation engine</strong> runs a tick loop (~1 tick/second) updating all node health, link utilization, and active attacks</li>
+  <li>Every <strong>4 ticks</strong>, the LangGraph orchestrator invokes all four AI agents sequentially</li>
+  <li>Agent decisions (attack, defend, monitor, generate traffic) are applied to the NetworkX graph</li>
+  <li>The complete state is serialized to JSON and <strong>broadcast via WebSocket</strong> to all connected frontend clients</li>
+  <li>The frontend receives the state and updates D3.js topology, health dashboard, logs, and top bar</li>
+  <li>User actions (launch attack, cut link, reset) are sent as <strong>REST API calls</strong> to the backend</li>
+</ol>
+
+<!-- ============ 4. NETWORK TOPOLOGY ============ -->
+<h2 id="network" class="page-break">4. Network Topology & Protocols</h2>
+
+<h3>4.1 Topology Design</h3>
+<p>The network consists of <strong>16 nodes</strong> and <strong>18 links</strong> organized in a hierarchical architecture:</p>
+
+<table>
+  <tr><th>Node ID</th><th>Label</th><th>Type</th><th>IP Address</th><th>Services</th></tr>
+  <tr><td>CR1</td><td>Core-1</td><td>Core Router</td><td>10.0.0.1</td><td>BGP, OSPF</td></tr>
+  <tr><td>CR2</td><td>Core-2</td><td>Core Router</td><td>10.0.0.2</td><td>BGP, OSPF</td></tr>
+  <tr><td>CR3</td><td>Core-3</td><td>Core Router</td><td>10.0.0.3</td><td>BGP, OSPF</td></tr>
+  <tr><td>ER1</td><td>Edge-1</td><td>Edge Router</td><td>10.1.0.1</td><td>NAT, DHCP</td></tr>
+  <tr><td>ER2</td><td>Edge-2</td><td>Edge Router</td><td>10.2.0.1</td><td>NAT, DHCP</td></tr>
+  <tr><td>ER3</td><td>Edge-3</td><td>Edge Router</td><td>10.3.0.1</td><td>NAT, DHCP</td></tr>
+  <tr><td>ER4</td><td>Edge-4</td><td>Edge Router</td><td>10.4.0.1</td><td>NAT, DHCP</td></tr>
+  <tr><td>DNS</td><td>DNS-Srv</td><td>Server</td><td>10.10.1.1</td><td>DNS</td></tr>
+  <tr><td>WEB</td><td>Web-Srv</td><td>Server</td><td>10.10.2.1</td><td>HTTP, HTTPS</td></tr>
+  <tr><td>DB</td><td>DB-Srv</td><td>Server</td><td>10.10.3.1</td><td>MySQL, Redis</td></tr>
+  <tr><td>H1–H6</td><td>Host 1–6</td><td>Host</td><td>192.168.x.x</td><td>—</td></tr>
+</table>
+
+<h3>4.2 OSPF Routing (Dijkstra's Algorithm)</h3>
+<p>
+  The simulation implements <strong>OSPF (Open Shortest Path First)</strong> routing using Dijkstra's shortest path algorithm provided by NetworkX. Each link has a dynamic cost calculated as:
+</p>
+<pre>cost = 1 + (link_utilization / 100)</pre>
+<p>
+  This means heavily utilized links have higher costs, causing traffic to prefer less congested paths — exactly how OSPF with load-sensitive metrics works in real networks. Severed links are excluded from the routing graph, and isolated nodes are unreachable.
+</p>
+
+<h3>4.3 BGP Route Tables</h3>
+<p>
+  Every core and edge router maintains a <strong>BGP Routing Information Base (RIB)</strong>. Each entry contains:
+</p>
+<ul>
+  <li><strong>Destination IP</strong> — the target node's IP address</li>
+  <li><strong>Next Hop</strong> — the immediate neighbor to forward to</li>
+  <li><strong>AS Path</strong> — the full route path (as node IDs)</li>
+  <li><strong>Metric</strong> — hop count to destination</li>
+  <li><strong>Origin</strong> — route origin type (IGP for internal routes)</li>
+</ul>
+<p>BGP tables are recomputed every 10 ticks and whenever a link is severed or restored. A <strong>BGP hijack attack</strong> can inject false routes into these tables.</p>
+
+<h3>4.4 Access Control Lists (ACLs)</h3>
+<p>
+  Each node has an ACL — a list of rules that filter incoming traffic. Rules are structured as <code>{action: "deny"|"permit", src: "ip"|"any"}</code>. The defender agent can dynamically add ACL rules to block malicious traffic sources.
+</p>
+
+<!-- ============ 5. SIMULATION ENGINE ============ -->
+<h2 id="simulation" class="page-break">5. Simulation Engine</h2>
+<p>
+  The simulation engine (<code>simulation.py</code>) is the core of the backend. It manages all network state using a <strong>NetworkX undirected graph</strong> where nodes are network devices and edges are links.
+</p>
+
+<h3>5.1 Tick Loop</h3>
+<p>Each tick executes these steps in order:</p>
+<ol>
+  <li><strong>Update Baseline Traffic</strong> — Random walk on link utilization (±3%, bounded 5–35%)</li>
+  <li><strong>Process Active Attacks</strong> — Apply damage, increase congestion, generate malicious packets</li>
+  <li><strong>Auto-Recovery</strong> — Heal compromised nodes (+1.5 hp/tick), recovering nodes (+2), normal nodes (+0.5)</li>
+  <li><strong>Generate Normal Traffic</strong> — 8 predefined traffic patterns with probabilistic activation</li>
+  <li><strong>Health Calculation</strong> — Weighted average: Core ×3, Server ×2.5, Edge ×2, Host ×1</li>
+  <li><strong>Crisis Detection</strong> — If health drops below 30%, state changes to CRISIS</li>
+  <li><strong>BGP Rebuild</strong> — Every 10 ticks, recompute all BGP routing tables</li>
+</ol>
+
+<h3>5.2 Node State Machine</h3>
+<div class="diagram">
+<pre>
+  normal ──(attack)──► under_attack ──(health≤20)──► compromised
+    ▲                       │                            │
+    │                  (attack ends)               (auto-heal)
+    │                       ▼                            ▼
+    └───(health≥90)── recovering ◄──(health>50)──────────┘
+
+  Any state ──(isolate action)──► isolated
+</pre>
+</div>
+
+<h3>5.3 Health Calculation</h3>
+<p>Overall network health is a <strong>weighted average</strong> of all node health values:</p>
+<pre>
+Health = Σ(node.health × weight[node.type]) / Σ(weight[node.type])
+
+Weights: core=3, server=2.5, edge=2, host=1
+</pre>
+<p>This ensures core infrastructure impacts the overall score more heavily than endpoint hosts.</p>
+
+<!-- ============ 6. AI AGENTS ============ -->
+<h2 id="agents" class="page-break">6. AI Agent System</h2>
+<p>
+  The agent system (<code>agents.py</code>) implements four <strong>LangChain chains</strong> using Groq's <strong>LLaMA 3.3 70B Versatile</strong> model. Each agent has a distinct persona, system prompt, and structured output schema.
+</p>
+
+<h3>6.1 REDSTORM — Attacker Agent</h3>
+<div class="callout">
+  <strong>Personality:</strong> Calculated, aggressive, methodical. Seeks vulnerabilities and exploits them ruthlessly.
+</div>
+<p><strong>Capabilities:</strong> Launches DDoS, BGP Hijack, MITM, or Port Scan attacks. Selects targets based on strategic value — prefers servers and core routers. Adapts strategy based on network health and active defenses.</p>
+<p><strong>Output:</strong> <code>{should_attack, attack_type, target, reasoning}</code></p>
+
+<h3>6.2 GUARDIAN — Defender Agent</h3>
+<div class="callout green">
+  <strong>Personality:</strong> Calm, strategic, protective. Thinks two steps ahead of the attacker.
+</div>
+<p><strong>Capabilities:</strong> Rate-limits DDoS (30% reduction), isolates compromised nodes, adds ACL rules, applies emergency patches (+15 HP), restores severed links.</p>
+<p><strong>Output:</strong> <code>{should_act, action, target, reasoning}</code></p>
+
+<h3>6.3 OVERWATCH — Monitor Agent</h3>
+<div class="callout amber">
+  <strong>Personality:</strong> Analytical, precise, vigilant. Nothing escapes detection.
+</div>
+<p><strong>Capabilities:</strong> Generates alert messages, rates severity (normal/elevated/critical), tracks health trends, detects anomalies in utilization and node status.</p>
+<p><strong>Output:</strong> <code>{alerts[], severity, summary}</code></p>
+
+<h3>6.4 FLOWMASTER — Traffic Agent</h3>
+<div class="callout">
+  <strong>Personality:</strong> Steady, adaptive, realistic. Simulates real user behavior.
+</div>
+<p><strong>Capabilities:</strong> Generates 2–5 traffic flows per cycle between hosts and servers. Adapts to outages — avoids down servers and congested paths.</p>
+<p><strong>Output:</strong> <code>{flows[{src, dst}], reasoning}</code></p>
+
+<h3>6.5 Fallback Logic</h3>
+<p>When the Groq API key is not configured, each agent falls back to <strong>rule-based decision making</strong>. The attacker uses randomized target selection, the defender checks for under_attack/compromised states, the monitor parses the state text for anomalies, and traffic generates random host-to-server flows.</p>
+
+<!-- ============ 7. LANGGRAPH ============ -->
+<h2 id="langgraph" class="page-break">7. LangGraph Orchestration</h2>
+<p>
+  The agent orchestration (<code>graph.py</code>) uses <strong>LangGraph's StateGraph</strong> to coordinate all four agents in a structured pipeline.
+</p>
+
+<h3>7.1 State Definition</h3>
+<pre>
+class AgentState(TypedDict):
+    tick: int                           # Current simulation tick
+    health: int                         # Overall network health
+    network_summary: str                # Condensed state for LLM context
+    active_attacks: List[Dict]          # Currently active attacks
+    attacker_decision: Dict             # Output from attacker
+    defender_decision: Dict             # Output from defender
+    monitor_report: Dict                # Output from monitor
+    traffic_plan: Dict                  # Output from traffic
+    actions_to_apply: List[Dict]        # Accumulated actions (reducer: append)
+    agent_logs: List[Dict]              # Accumulated logs (reducer: append)
+</pre>
+
+<h3>7.2 Execution Flow</h3>
+<div class="diagram">
+<pre>
+    START
+      │
+      ▼
+  [ATTACKER] ──► Decides whether to attack, which type, which target
+      │
+      ▼
+  [DEFENDER] ──► Sees attacker's action + network state, decides counter-move
+      │
+      ▼
+  [MONITOR]  ──► Observes everything, generates alerts and severity rating
+      │
+      ▼
+  [TRAFFIC]  ──► Adapts traffic patterns to current network conditions
+      │
+      ▼
+     END ──► actions_to_apply[] and agent_logs[] are returned
+</pre>
+</div>
+
+<h3>7.3 Firing Frequency</h3>
+<p>Agents fire every <strong>4 ticks</strong> (configurable via <code>AGENT_FREQUENCY</code>). Between agent cycles, the simulation runs purely on its tick engine — processing existing attacks, healing nodes, and generating baseline traffic. This prevents LLM latency from slowing down the simulation.</p>
+
+<!-- ============ 8. FRONTEND ============ -->
+<h2 id="frontend" class="page-break">8. Frontend Dashboard</h2>
+<p>The frontend is a single-page application built with <strong>vanilla HTML/CSS/JavaScript</strong> and <strong>D3.js v7</strong>. It receives all data from the backend via WebSocket — no simulation logic runs in the browser.</p>
+
+<h3>8.1 Layout</h3>
+<table>
+  <tr><th>Panel</th><th>Position</th><th>Width</th><th>Content</th></tr>
+  <tr><td>Top Bar</td><td>Top</td><td>100%</td><td>Logo, Health Score (color-coded), Tick Counter, Status Badge</td></tr>
+  <tr><td>Topology Graph</td><td>Left</td><td>68%</td><td>D3.js force-directed graph with interactive nodes</td></tr>
+  <tr><td>Health Dashboard</td><td>Right top</td><td>32%</td><td>Donut chart + node status cards grid</td></tr>
+  <tr><td>Logs Panel</td><td>Right bottom</td><td>32%</td><td>Tabbed: Attack / Defense / Monitor logs</td></tr>
+  <tr><td>Control Panel</td><td>Bottom</td><td>100%</td><td>Attack buttons, network controls, speed toggle</td></tr>
+</table>
+
+<h3>8.2 D3.js Topology Graph</h3>
+<ul>
+  <li><strong>Force-directed layout</strong> with collision detection — nodes are draggable</li>
+  <li><strong>Node shapes:</strong> Circles for routers/hosts, diamonds for servers</li>
+  <li><strong>Node colors:</strong> Cyan (normal), Red pulse (under attack), Red fill (compromised), Gray (isolated), Amber pulse (recovering)</li>
+  <li><strong>Link colors:</strong> Thin dark (low util), Amber (medium), Red glow (high/congested), Dashed gray (severed)</li>
+  <li><strong>Packet animation:</strong> Colored dots travel along routing paths — cyan for legitimate, red for malicious</li>
+  <li><strong>Hover tooltips:</strong> Show node IP, type, health bar, status, services</li>
+</ul>
+
+<h3>8.3 Design System</h3>
+<p>The design uses a <strong>premium dark gaming aesthetic</strong> inspired by network operations centers:</p>
+<ul>
+  <li><strong>Color palette:</strong> Deep burgundy backgrounds (#1A0A0F, #2D1219), crimson accents (#C0392B), cyan for healthy flows (#00D4FF)</li>
+  <li><strong>Typography:</strong> Rajdhani (headings — military feel), JetBrains Mono (logs/IPs), Inter (body UI)</li>
+  <li><strong>Animations:</strong> Attack pulse glow, recovery amber glow, log entry fade-in, packet travel easing</li>
+</ul>
+
+<!-- ============ 9. API ============ -->
+<h2 id="api">9. API & Communication</h2>
+
+<h3>9.1 WebSocket Protocol</h3>
+<p>The server pushes a JSON state update to all connected clients on every simulation tick:</p>
+<pre>
+{
+  "type": "tick",
+  "tick": 42,
+  "health": 87,
+  "state": "running",
+  "nodes": [
+    {"id":"CR1", "label":"Core-1", "type":"core", "ip":"10.0.0.1",
+     "health":95.0, "status":"normal", "services":["BGP","OSPF"], "acl":[]}
+  ],
+  "links": [
+    {"id":"CR1-CR2", "source":"CR1", "target":"CR2",
+     "bandwidth":10000, "utilization":15.3, "status":"active"}
+  ],
+  "packets": [
+    {"path":["H1","ER1","CR1","CR2","ER2","WEB"], "type":"legitimate"}
+  ],
+  "logs": [
+    {"type":"attack", "message":"DDoS on Web-Srv", "detail":"...", "tick":42}
+  ],
+  "active_attacks": [
+    {"id":"ddos-1", "type":"ddos", "target":"WEB", "intensity":60.0, "active":true}
+  ]
+}
+</pre>
+
+<h3>9.2 REST Endpoints</h3>
+<table>
+  <tr><th>Method</th><th>Endpoint</th><th>Body</th><th>Description</th></tr>
+  <tr><td>GET</td><td>/health</td><td>—</td><td>Get current health, tick, state</td></tr>
+  <tr><td>POST</td><td>/control/attack</td><td>{type, target}</td><td>Launch a cyber attack</td></tr>
+  <tr><td>POST</td><td>/control/cut-link</td><td>{source, target}</td><td>Sever a network link</td></tr>
+  <tr><td>POST</td><td>/control/restore-link</td><td>{source, target}</td><td>Restore a severed link</td></tr>
+  <tr><td>POST</td><td>/control/reset</td><td>—</td><td>Reset entire simulation</td></tr>
+  <tr><td>POST</td><td>/control/start</td><td>—</td><td>Start simulation</td></tr>
+  <tr><td>POST</td><td>/control/pause</td><td>—</td><td>Pause simulation</td></tr>
+  <tr><td>POST</td><td>/control/speed?speed=2</td><td>—</td><td>Set simulation speed</td></tr>
+</table>
+
+<!-- ============ 10. ATTACKS ============ -->
+<h2 id="attacks" class="page-break">10. Attack & Defense Mechanisms</h2>
+
+<h3>10.1 Attack Types</h3>
+<table>
+  <tr><th>Attack</th><th>Duration</th><th>Damage</th><th>Effect</th></tr>
+  <tr><td><strong>DDoS</strong></td><td>15–25 ticks</td><td>3 + intensity/20 per tick</td><td>Floods target, spikes link utilization to 90%+, generates malicious packets</td></tr>
+  <tr><td><strong>BGP Hijack</strong></td><td>20 ticks</td><td>2/tick to target + 0.8 to neighbors</td><td>Corrupts routing tables, redirects traffic through compromised node</td></tr>
+  <tr><td><strong>MITM</strong></td><td>18 ticks</td><td>1.5/tick</td><td>Intercepts packets through target node, captures credentials</td></tr>
+  <tr><td><strong>Port Scan</strong></td><td>8 ticks</td><td>0.5/tick</td><td>Probes 1024 ports, reveals open services, reconnaissance attack</td></tr>
+</table>
+
+<h3>10.2 Defense Mechanisms</h3>
+<table>
+  <tr><th>Defense</th><th>Effect</th></tr>
+  <tr><td><strong>Rate Limiting</strong></td><td>Reduces DDoS attack intensity by 30% each application</td></tr>
+  <tr><td><strong>Node Isolation</strong></td><td>Quarantines node from network — stops lateral movement</td></tr>
+  <tr><td><strong>ACL Rules</strong></td><td>Blocks traffic from specific sources at the firewall level</td></tr>
+  <tr><td><strong>Emergency Patch</strong></td><td>Instantly restores 15 health points to a damaged node</td></tr>
+  <tr><td><strong>Link Restoration</strong></td><td>Restores a previously severed network connection</td></tr>
+</table>
+
+<!-- ============ 11. TECH STACK ============ -->
+<h2 id="tech">11. Technology Stack</h2>
+<table>
+  <tr><th>Layer</th><th>Technology</th><th>Purpose</th></tr>
+  <tr><td>Frontend</td><td>HTML5, CSS3, Vanilla JavaScript</td><td>UI structure, styling, interaction</td></tr>
+  <tr><td>Visualization</td><td>D3.js v7</td><td>Force-directed topology graph, donut chart</td></tr>
+  <tr><td>Typography</td><td>Google Fonts (Rajdhani, JetBrains Mono, Inter)</td><td>Premium typography</td></tr>
+  <tr><td>Backend Framework</td><td>FastAPI + Uvicorn</td><td>Async HTTP/WebSocket server</td></tr>
+  <tr><td>Graph Engine</td><td>NetworkX</td><td>Network topology, Dijkstra routing</td></tr>
+  <tr><td>AI Agents</td><td>LangChain + LangChain-Groq</td><td>LLM chains with structured output</td></tr>
+  <tr><td>Orchestration</td><td>LangGraph</td><td>Agent StateGraph pipeline</td></tr>
+  <tr><td>LLM</td><td>Groq — LLaMA 3.3 70B Versatile</td><td>Agent decision-making</td></tr>
+  <tr><td>Communication</td><td>WebSocket + REST</td><td>Real-time state streaming + control</td></tr>
+</table>
+
+<!-- ============ 12. SETUP ============ -->
+<h2 id="setup">12. Setup & Execution</h2>
+
+<h3>Prerequisites</h3>
+<ul>
+  <li>Python 3.10 or higher</li>
+  <li>Node.js (for static file server) or any HTTP server</li>
+  <li>Groq API key (free tier available at <code>https://console.groq.com/keys</code>)</li>
+</ul>
+
+<h3>Step 1: Install Backend Dependencies</h3>
+<pre>
+cd backend
+pip install -r requirements.txt
+</pre>
+
+<h3>Step 2: Configure Environment</h3>
+<pre>
+copy .env.example .env
+# Edit .env and set: GROQ_API_KEY=gsk_your_actual_key_here
+</pre>
+
+<h3>Step 3: Start Backend Server</h3>
+<pre>
+python main.py
+# Server starts at http://localhost:8000
+</pre>
+
+<h3>Step 4: Serve Frontend</h3>
+<pre>
+cd ..     # back to project root
+npx -y serve .
+# Frontend serves at http://localhost:3000
+</pre>
+
+<h3>Step 5: Open Dashboard</h3>
+<p>Navigate to <strong>http://localhost:3000</strong> in your browser. The dashboard auto-connects to the backend and the simulation starts automatically.</p>
+
+<!-- ============ 13. CONCLUSION ============ -->
+<h2 id="conclusion" class="page-break">13. Conclusion</h2>
+<p>
+  NETCRISIS successfully demonstrates the intersection of classical computer networking and modern AI. By modeling a real network topology with OSPF routing, BGP tables, and ACL filtering in NetworkX, and then layering four autonomous LLM-powered agents on top, the project creates a dynamic, realistic simulation of network operations during a cyber crisis.
+</p>
+<p>
+  The system showcases how AI agents can make strategic decisions about network security — the attacker probes weaknesses, the defender responds adaptively, the monitor maintains situational awareness, and the traffic agent simulates realistic user behavior. All of this is visualized through a cinematic real-time dashboard that provides immediate feedback on every network event.
+</p>
+<p>
+  <strong>Key Computer Networking concepts demonstrated:</strong>
+</p>
+<ul>
+  <li>Network topology design (hierarchical core-edge-host architecture)</li>
+  <li>OSPF routing with Dijkstra's shortest path algorithm</li>
+  <li>BGP routing information bases and route table computation</li>
+  <li>Access Control Lists for traffic filtering</li>
+  <li>Link utilization, bandwidth, and congestion modeling</li>
+  <li>DDoS, BGP hijacking, MITM, and port scanning attacks</li>
+  <li>Defense mechanisms: rate limiting, isolation, ACLs, patching</li>
+  <li>WebSocket real-time communication protocol</li>
+  <li>REST API design for network management operations</li>
+</ul>
+
+<div class="footer">
+  NETCRISIS — Network Crisis Simulation Dashboard &bull; Project Report &bull; March 2026
+</div>
+
+</body>
+</html>

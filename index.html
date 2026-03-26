@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="NETCRISIS — Real-time network crisis simulation dashboard with D3.js topology visualization, attack/defense simulation, and dynamic health monitoring." />
+  <title>NETCRISIS — Network Crisis Simulator</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- D3.js -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/topbar.css" />
+  <link rel="stylesheet" href="css/topology.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/logs.css" />
+  <link rel="stylesheet" href="css/controls.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- ==================== TOP BAR ==================== -->
+    <header id="topbar">
+      <div class="topbar-logo">
+        <span class="topbar-logo__dot" id="status-dot"></span>
+        <span class="topbar-logo__text">NETCRISIS</span>
+      </div>
+
+      <div class="topbar-health">
+        <span class="topbar-health__score topbar-health__score--healthy" id="health-score">100</span>
+        <span class="topbar-health__label">NETWORK HEALTH</span>
+      </div>
+
+      <div class="topbar-status">
+        <span class="topbar-status__tick" id="tick-counter">TICK 000</span>
+        <span class="topbar-status__badge topbar-status__badge--paused" id="status-badge">PAUSED</span>
+      </div>
+    </header>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <div id="main-content">
+
+      <!-- LEFT: Topology Graph -->
+      <div id="left-panel">
+        <div id="topology-container">
+          <svg id="topology-svg"></svg>
+          <div class="topology-tooltip" id="topology-tooltip"></div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Dashboard + Logs -->
+      <div id="right-panel">
+
+        <!-- Health Dashboard -->
+        <div id="health-dashboard">
+          <div class="attack-banner" id="attack-banner">
+            <span class="attack-banner__icon">!</span>
+            <span class="attack-banner__text"></span>
+          </div>
+
+          <div class="donut-container"></div>
+
+          <div class="node-cards-grid"></div>
+        </div>
+
+        <!-- Logs Panel -->
+        <div id="logs-panel">
+          <div class="logs-tabs">
+            <button class="logs-tab logs-tab--active" data-tab="attack">ATTACK</button>
+            <button class="logs-tab" data-tab="defense">DEFENSE</button>
+            <button class="logs-tab" data-tab="monitor">MONITOR</button>
+          </div>
+          <div class="logs-list"></div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ==================== CONTROL PANEL ==================== -->
+    <footer id="control-panel">
+
+      <!-- Attack Buttons -->
+      <div class="control-group">
+        <span class="control-group__label">ATTACK</span>
+        <button class="btn-attack btn-attack--ddos" id="btn-ddos">DDOS</button>
+        <button class="btn-attack btn-attack--bgp" id="btn-bgp">BGP HIJACK</button>
+        <button class="btn-attack btn-attack--mitm" id="btn-mitm">MITM</button>
+        <button class="btn-attack btn-attack--scan" id="btn-scan">PORT SCAN</button>
+      </div>
+
+      <!-- Network Controls -->
+      <div class="control-group">
+        <span class="control-group__label">NETWORK</span>
+        <button class="btn-network btn-network--cut" id="btn-cut-link">CUT LINK</button>
+        <button class="btn-network btn-network--restore" id="btn-restore-link">RESTORE LINK</button>
+      </div>
+
+      <!-- Right Controls -->
+      <div class="control-group">
+        <button class="btn-reset" id="btn-reset">RESET</button>
+        <div class="speed-toggle">
+          <button class="speed-toggle__btn" data-speed="0.5">0.5x</button>
+          <button class="speed-toggle__btn speed-toggle__btn--active" data-speed="1">1x</button>
+          <button class="speed-toggle__btn" data-speed="2">2x</button>
+        </div>
+      </div>
+
+    </footer>
+
+  </div>
+
+  <!-- App Script -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

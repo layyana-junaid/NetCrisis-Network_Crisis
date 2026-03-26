@@ -1,0 +1,262 @@
+/* ============================================
+   NETCRISIS — Control Panel
+   ============================================ */
+
+#control-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--controls-height);
+  padding: 0 16px;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+  gap: 12px;
+  z-index: 100;
+}
+
+/* Button Groups */
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.control-group__label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-muted);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-right: 4px;
+}
+
+/* Attack Buttons */
+.btn-attack {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  color: var(--text-primary);
+  text-transform: uppercase;
+  position: relative;
+}
+
+.btn-attack--ddos {
+  background: var(--attack-red);
+}
+
+.btn-attack--bgp {
+  background: var(--accent-primary);
+}
+
+.btn-attack--mitm {
+  background: #9B2335;
+}
+
+.btn-attack--scan {
+  background: #7B1A28;
+}
+
+.btn-attack:hover {
+  filter: brightness(1.15);
+}
+
+.btn-attack--active {
+  animation: statusPulse 1.5s ease-in-out infinite;
+}
+
+.btn-attack--active::after {
+  content: 'ACTIVE';
+  position: absolute;
+  top: -6px;
+  right: -4px;
+  font-size: 7px;
+  letter-spacing: 1px;
+  padding: 1px 4px;
+  background: var(--text-primary);
+  color: var(--attack-red);
+  border-radius: var(--radius-pill);
+}
+
+/* Network Control Buttons */
+.btn-network {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 1px;
+  padding: 7px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+
+.btn-network:hover {
+  color: var(--text-primary);
+  background: var(--border);
+}
+
+.btn-network--cut {
+  border-color: var(--warning-amber);
+}
+
+.btn-network--restore {
+  border-color: var(--defense-green);
+}
+
+.btn-network--add {
+  border-color: var(--accent-cyan);
+}
+
+/* Reset Button */
+.btn-reset {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  padding: 7px 14px;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+}
+
+.btn-reset:hover {
+  color: var(--text-secondary);
+  border-color: var(--text-muted);
+}
+
+/* Speed Toggle */
+.speed-toggle {
+  display: flex;
+  background: var(--bg-base);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.speed-toggle__btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 5px 10px;
+  color: var(--text-muted);
+  background: transparent;
+  border-radius: 0;
+}
+
+.speed-toggle__btn:active {
+  transform: none;
+}
+
+.speed-toggle__btn:hover {
+  color: var(--text-secondary);
+}
+
+.speed-toggle__btn--active {
+  background: var(--accent-primary);
+  color: var(--text-primary);
+}
+
+/* Target Dropdown */
+.target-dropdown {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 6px 0;
+  min-width: 160px;
+  z-index: 500;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  animation: fadeInUp 150ms ease;
+}
+
+.target-dropdown__item {
+  display: block;
+  width: 100%;
+  padding: 6px 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+  background: transparent;
+  text-align: left;
+  border-radius: 0;
+}
+
+.target-dropdown__item:active {
+  transform: none;
+}
+
+.target-dropdown__item:hover {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+/* Confirm Dialog */
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeInUp 200ms ease;
+}
+
+.confirm-dialog {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px 32px;
+  text-align: center;
+  max-width: 320px;
+}
+
+.confirm-dialog__title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.confirm-dialog__text {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.confirm-dialog__actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.confirm-dialog__btn {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1px;
+  padding: 8px 20px;
+  border-radius: var(--radius-pill);
+  text-transform: uppercase;
+}
+
+.confirm-dialog__btn--cancel {
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+}
+
+.confirm-dialog__btn--confirm {
+  background: var(--attack-red);
+  color: var(--text-primary);
+}
