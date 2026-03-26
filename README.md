@@ -2,9 +2,13 @@
 
 A real-time, AI-powered network crisis simulation platform featuring a cinematic dark-themed dashboard with D3.js topology visualization, four autonomous LLM agents (attacker, defender, monitor, traffic), and a full NetworkX-based simulation engine.
 
-![Status](https://img.shields.io/badge/status-active-brightgreen)
-![Python](https://img.shields.io/badge/python-3.10+-blue)
-![License](https://img.shields.io/badge/license-MIT-yellow)
+
+![Status](https://img.shields.io/badge/STATUS-ACTIVE-C0392B?style=for-the-badge&labelColor=2D1219&color=C0392B)
+![Python](https://img.shields.io/badge/PYTHON-3.10+-C0392B?style=for-the-badge&labelColor=2D1219&color=7B1A28)
+![LangGraph](https://img.shields.io/badge/LANGGRAPH-MULTI--AGENT-C0392B?style=for-the-badge&labelColor=2D1219&color=9B2335)
+![Groq](https://img.shields.io/badge/GROQ-LLM%20POWERED-C0392B?style=for-the-badge&labelColor=2D1219&color=C0392B)
+![FastAPI](https://img.shields.io/badge/FASTAPI-WEBSOCKET-C0392B?style=for-the-badge&labelColor=2D1219&color=7B1A28)
+![D3.js](https://img.shields.io/badge/D3.JS-TOPOLOGY-C0392B?style=for-the-badge&labelColor=2D1219&color=9B2335)
 
 ---
 
@@ -31,15 +35,15 @@ NETCRISIS simulates a realistic enterprise network under cyber attack. Four AI a
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                    FRONTEND (Vanilla JS)                 │
-│  ┌──────────┐ ┌──────────┐ ┌────────┐ ┌──────────────┐ │
-│  │ D3.js    │ │ Health   │ │ Logs   │ │ Control      │ │
-│  │ Topology │ │ Dashboard│ │ Panel  │ │ Panel        │ │
-│  └────┬─────┘ └────┬─────┘ └───┬────┘ └──────┬───────┘ │
-│       │             │           │              │         │
-│       └─────────────┴───────┬───┴──────────────┘         │
-│                        EventBus                          │
-│                          │  ▲                            │
+│                    FRONTEND (Vanilla JS)                │
+│  ┌──────────┐ ┌──────────┐ ┌────────┐ ┌──────────────┐  │
+│  │ D3.js    │ │ Health   │ │ Logs   │ │ Control      │  │
+│  │ Topology │ │ Dashboard│ │ Panel  │ │ Panel        │  │
+│  └────┬─────┘ └────┬─────┘ └───┬────┘ └──────┬───────┘  │
+│       │             │           │              │        │
+│       └─────────────┴───────┬───┴──────────────┘        │
+│                        EventBus                         │
+│                          │  ▲                           │
 │                     WS ▼  │ REST                        │
 └─────────────────────────────────────────────────────────┘
                           │
@@ -47,24 +51,24 @@ NETCRISIS simulates a realistic enterprise network under cyber attack. Four AI a
                     REST /control/*
                           │
 ┌─────────────────────────────────────────────────────────┐
-│                  BACKEND (Python FastAPI)                 │
-│                                                          │
+│                  BACKEND (Python FastAPI)               │
+│                                                         │
 │  ┌──────────────────────────────────────────────────┐   │
-│  │              main.py (FastAPI)                     │   │
-│  │  WebSocket broadcast │ REST endpoints │ Tick loop  │   │
-│  └──────────┬───────────┴────────────────────────────┘   │
-│             │                                            │
+│  │              main.py (FastAPI)                    │  │
+│  │  WebSocket broadcast │ REST endpoints │ Tick loop │  │
+│  └──────────┬───────────┴────────────────────────────┘  │
+│             │                                           │
 │  ┌──────────▼──────────┐    ┌────────────────────────┐  │
-│  │   simulation.py     │    │      graph.py           │  │
-│  │   NetworkX Engine   │◄───│   LangGraph StateGraph  │  │
-│  │   OSPF / BGP / ACL  │    │   Agent Orchestration   │  │
+│  │   simulation.py     │    │      graph.py          │  │
+│  │   NetworkX Engine   │◄───│   LangGraph StateGraph │  │
+│  │   OSPF / BGP / ACL  │    │   Agent Orchestration  │  │
 │  └─────────────────────┘    └───────────┬────────────┘  │
-│                                         │                │
+│                                         │               │
 │                              ┌──────────▼──────────┐    │
-│                              │     agents.py        │    │
-│                              │  4 LangChain Chains  │    │
-│                              │  Groq LLaMA 3.3 70B  │    │
-│                              └──────────────────────┘    │
+│                              │     agents.py        │   │
+│                              │  4 LangChain Chains  │   │
+│                              │  Groq LLaMA 3.3 70B  │   │
+│                              └──────────────────────┘   │
 └─────────────────────────────────────────────────────────┘
 ```
 
@@ -192,7 +196,3 @@ Agents run every **4 ticks** via LangGraph's StateGraph. Each agent receives a c
 **Backend:** Python 3.10+, FastAPI, NetworkX, LangChain, LangGraph, Groq (LLaMA 3.3 70B), Uvicorn
 
 ---
-
-## License
-
-MIT License — free for educational and personal use.
